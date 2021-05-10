@@ -1,5 +1,46 @@
 # Changelog
 
+## [1.24.2] - 2021-05-05
+
+This patch release primarily exists to work around a
+[problem discovered][issue#2748] on some Windows (and potentially other) systems
+where a combination of factors, including suspected allocator behaviour, led to
+Rustup failing to install certain toolchains. The symptom users observed was a
+failure to allocate 1677732 bytes: a chunk used for unpacking very large files.
+We hope this is fixed in [pr#2750][].
+
+In addition to that, we also:
+
+### Added
+
+- SHA256 links on the download page so that you can verify your downloads if you
+  want to be certain. [pr#2719][]
+- Added `--verbose` to `rustup show active-toolchain` to also display the version
+  of the compiler for the toolchain. [pr#2710]
+
+### Changed
+
+- Amended the behaviour of the 'missing components' code so that if the problem
+  exists when _installing_ a toolchain (rather than updating it) the message
+  is different and leads you to other remediations. [pr#2709][]
+- Amended the error message for a missing component so that when you're using
+  a nightly toolchain and `rust-std` is missing for a given target, we lead you
+  to `cargo build -Z build-std` as a remediation. [pr#2732][]
+
+Thanks go to:
+
+- 二手掉包工程师 (hi-rustin)
+- Robert Collins
+- Daniel Silverstone
+- Joshua Nelson
+
+[issue#2748]: https://github.com/rust-lang/rustup/issues/2748
+[pr#2750]: https://github.com/rust-lang/rustup/pull/2750
+[pr#2732]: https://github.com/rust-lang/rustup/pull/2732
+[pr#2710]: https://github.com/rust-lang/rustup/pull/2710
+[pr#2709]: https://github.com/rust-lang/rustup/pull/2709
+[pr#2719]: https://github.com/rust-lang/rustup/pull/2719
+
 ## [1.24.1] - 2021-04-27
 
 This bugfix release [corrects an oversight][pr#2738] in the code we introduced to check for
